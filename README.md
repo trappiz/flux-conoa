@@ -96,21 +96,24 @@ flux get kustomizations --watch
 ## Install helm app 
 ### In this case we will install nginx
 
+```bash
+# Define source helm repo
+flux create source helm ingress-nginx --url https://kubernetes.github.io/ingress-nginx
+
+# Deploy nginx ic using helm!
+flux create helmrelease ingress-nginx --chart ingress-nginx \
+  --source HelmRepository/ingress-nginx \
+  --chart-version 4.1.4 \
+  --create-target-namespace \
+  --target-namespace=ingress-nginx
+```
+
 This is the same as running:
 
 ```bash
 helm upgrade --install ingress-nginx ingress-nginx \
   --repo https://kubernetes.github.io/ingress-nginx \
   --namespace ingress-nginx --create-namespace
-```
-
-```bash
-flux create source helm ingress-nginx --url https://kubernetes.github.io/ingress-nginx
-flux create helmrelease ingress-nginx --chart ingress-nginx \
-  --source HelmRepository/ingress-nginx \
-  --chart-version 4.1.4 \
-  --create-target-namespace \
-  --target-namespace=ingress-nginx
 ```
 
 
